@@ -66,7 +66,9 @@ func serveHTTP(w http.ResponseWriter, req *http.Request) {
 	d := &net.Dialer{
 		Timeout: 10 * time.Second,
 	}
-	dialer, _ := proxy.SOCKS5("tcp", "127.0.0.1:1080", nil, d)
+	//dialer, _ := proxy.SOCKS5("tcp", "127.0.0.1:1080", nil, d)
+	//dialer, _ := proxy.SOCKS5("tcp", "114.99.2.150:38801", nil, d)
+	dialer, _ := proxy.SOCKS5("tcp", "134.175.102.70:1080" , nil, d)
 
 	if req.Method == "CONNECT" {
 		handleTunnel(w, req, dialer)
@@ -76,5 +78,5 @@ func serveHTTP(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	http.ListenAndServe("127.0.0.1:8124", http.HandlerFunc(serveHTTP))
+	http.ListenAndServe("127.0.0.1:22226", http.HandlerFunc(serveHTTP))
 }
