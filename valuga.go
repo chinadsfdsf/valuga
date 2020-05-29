@@ -5,6 +5,7 @@ import (
 	"net"
 	"net/http"
 	"time"
+    "fmt"
 
 	"golang.org/x/net/proxy"
 )
@@ -63,12 +64,16 @@ func transfer(dst io.WriteCloser, src io.ReadCloser) {
 }
 
 func serveHTTP(w http.ResponseWriter, req *http.Request) {
+    //upProxyStr := "134.175.102.70:1080" ;
+    upProxyStr := "216.144.228.130:15378"  ;
 	d := &net.Dialer{
 		Timeout: 10 * time.Second,
 	}
 	//dialer, _ := proxy.SOCKS5("tcp", "127.0.0.1:1080", nil, d)
 	//dialer, _ := proxy.SOCKS5("tcp", "114.99.2.150:38801", nil, d)
-	dialer, _ := proxy.SOCKS5("tcp", "134.175.102.70:1080" , nil, d)
+	//dialer, _ := proxy.SOCKS5("tcp", "134.175.102.70:1080" , nil, d)
+    fmt.Printf( "\n\nUsing up-proxy on : %s\n\n" , upProxyStr );
+	dialer, _ := proxy.SOCKS5("tcp", upProxyStr , nil, d)
 
 	if req.Method == "CONNECT" {
 		handleTunnel(w, req, dialer)
@@ -78,5 +83,7 @@ func serveHTTP(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	http.ListenAndServe("127.0.0.1:22226", http.HandlerFunc(serveHTTP))
+    listenStr := "127.0.0.1:22226" ;
+    fmt.Printf( "\n\nListing on : %s\n\n" , listenStr );
+	http.ListenAndServe( listenStr , http.HandlerFunc(serveHTTP))
 }
