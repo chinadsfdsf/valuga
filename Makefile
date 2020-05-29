@@ -7,9 +7,9 @@ gs:
 gc:
 	git commit -a
 
-v1 b1: src:=valuga
-v2 b2: src:=https_baidu
-v3 b3: src:=httpproxy
+r1 v1 b1: src:=valuga
+r2 v2 b2: src:=https_baidu
+r3 v3 b3: src:=httpproxy
 
 b1 b2 b3: 
 	rm -f       bin.$(src).bin 
@@ -17,3 +17,6 @@ b1 b2 b3:
 
 v1 v2 v3:
 	vim $(src).go
+
+r1 r2 r3:
+	./bin.$(src).bin
