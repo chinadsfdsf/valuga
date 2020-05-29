@@ -7,12 +7,13 @@ gs:
 gc:
 	git commit -a
 
-b1:
-	rm -f       bin.valuga.bin 
-	go build -o bin.valuga.bin valuga.go
-b2:
-	rm -f       bin.https_baidu.bin 
-	go build -o bin.https_baidu.bin https_baidu.go
-b3:
-	rm -f       bin.httpproxy.bin 
-	go build -o bin.httpproxy.bin httpproxy.go
+v1 b1: src:=valuga
+v2 b2: src:=https_baidu
+v3 b3: src:=httpproxy
+
+b1 b2 b3: 
+	rm -f       bin.$(src).bin 
+	go build -o bin.$(src).bin $(src).go
+
+v1 v2 v3:
+	vim $(src).go
